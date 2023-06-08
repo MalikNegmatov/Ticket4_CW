@@ -14,8 +14,6 @@ public class Main {
 
         // Фактически поиск с помощью фильтра, сложность порядка O(n)
         System.out.println(allOneString(deleteDubsByStream(testArray)));
-
-        deleteDubsMyPool(testArray);
     }
 
     public static String[] deleteDubsByStream(String[] arr) {
@@ -58,11 +56,16 @@ public class Main {
         // В условии задачи нет требования к добавлению разделителя между строками
     }
 
-    public static void deleteDubsMyPool(String[] arr) {
-        MyPool myPool = new MyPool();
-        for (String w : arr) {
-            myPool.intern(w);
-        }
-        System.out.println(myPool);
-    }
+//    public static void deleteDubsMyPool(String[] arr) {
+//        MyPool myPool = new MyPool();
+//        for (String w : arr) {
+//            myPool.intern(w);
+//        }
+//        System.out.println(myPool);
+//    }
+// Тут была мысль написать метод возвращающий true, если intern возвращает ссылку на
+// новый экземпляр пула, и false если там уже есть строка, и используя этот флаг сразу
+// строить необходимую строку ответа. Но как-то закрались сомнения в общей полезности
+// такой реализации собственного пула строк. Фильтр по множеству проще.
+
 }
