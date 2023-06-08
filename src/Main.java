@@ -8,9 +8,15 @@ public class Main {
         // Инициализируем тестовый архив строк
         String[] testArray = {"ясень", "тополь", "береза", "сосна", "ясень", "дуб", "береза", "Ясень", "тополь", "сосна", "сосна"};
         System.out.println(Arrays.toString(testArray));
+
         // поиск дублей полным перебором, сложность O(n^2) без учета времени на сравнение string.equals()
         System.out.println(allOneString(deleteDubs(testArray)));
-        // поиск дублей полным перебором
+
+        // Фактически поиск с помощью фильтра, сложность порядка O(n)
+        System.out.println(allOneString(deleteDubsByStream(testArray)));
+    }
+    public static String[] deleteDubsByStream(String[] arr) {
+        return Arrays.stream(arr).distinct().toArray(String[]::new);
     }
 
     /**
@@ -18,11 +24,11 @@ public class Main {
      * @param arr -- массив строк
      */
     public static String[] deleteDubs(String[] arr) {
-        String[] uniqArr = Arrays.copyOf(arr, arr.length );
+        String[] uniqArr = Arrays.copyOf(arr, arr.length ); // работаем с копией переданного массива
         for (int i = 0; i < (uniqArr.length - 1); i++) { // цикл по элементам массива
             if (uniqArr[i] != null) { // проверка на то, что ссылка на объект не пустая
                 // цикл сравнения с последующими элементами массива
-                for (int j = i + 1; j < uniqArr.length - 1; j++) {
+                for (int j = i + 1; j < uniqArr.length; j++) {
                     if (uniqArr[i].equals(uniqArr[j])) {  // сравниваем содержание экземпляров объектов
                         uniqArr[j] = null; // если встретили дубликат -- ссылку на него "теряем"
                     }
