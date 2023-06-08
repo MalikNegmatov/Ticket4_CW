@@ -6,9 +6,30 @@ public class Main {
     оставшиеся строки объединить в одну в порядке следования в массиве. */
     public static void main(String[] args) {
         // Инициализируем тестовый архив строк
-        String[] testArray = {"ясень", "тополь", "береза", "сосна", "ясень", "дуб", "береза", "Ясень", "тополь", "сосна", "сосна",};
+        String[] testArray = {"ясень", "тополь", "береза", "сосна", "ясень", "дуб", "береза", "Ясень", "тополь", "сосна", "сосна"};
         System.out.println(Arrays.toString(testArray));
-        System.out.println(allOneString(testArray));
+        // поиск дублей полным перебором, сложность O(n^2) без учета времени на сравнение string.equals()
+        System.out.println(allOneString(deleteDubs(testArray)));
+        // поиск дублей полным перебором
+    }
+
+    /**
+     * Метод поиска дубликатов полным перебором брут форс
+     * @param arr -- массив строк
+     */
+    public static String[] deleteDubs(String[] arr) {
+        String[] uniqArr = Arrays.copyOf(arr, arr.length );
+        for (int i = 0; i < (uniqArr.length - 1); i++) { // цикл по элементам массива
+            if (uniqArr[i] != null) { // проверка на то, что ссылка на объект не пустая
+                // цикл сравнения с последующими элементами массива
+                for (int j = i + 1; j < uniqArr.length - 1; j++) {
+                    if (uniqArr[i].equals(uniqArr[j])) {  // сравниваем содержание экземпляров объектов
+                        uniqArr[j] = null; // если встретили дубликат -- ссылку на него "теряем"
+                    }
+                } // внутренний цикл
+            }
+        } //внешний цикл
+        return uniqArr;
     }
 
     /**
