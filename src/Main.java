@@ -14,18 +14,22 @@ public class Main {
 
         // Фактически поиск с помощью фильтра, сложность порядка O(n)
         System.out.println(allOneString(deleteDubsByStream(testArray)));
+
+        deleteDubsMyPool(testArray);
     }
+
     public static String[] deleteDubsByStream(String[] arr) {
         return Arrays.stream(arr).distinct().toArray(String[]::new);
     }
 
     /**
      * Метод поиска дубликатов полным перебором брут форс
+     *
      * @param arr -- массив строк
      */
     public static String[] deleteDubs(String[] arr) {
-        String[] uniqArr = Arrays.copyOf(arr, arr.length ); // работаем с копией переданного массива
-        for (int i = 0; i < (uniqArr.length - 1); i++) { // цикл по элементам массива
+        String[] uniqArr = Arrays.copyOf(arr, arr.length); // работаем с копией переданного массива
+        for (int i = 0; i < uniqArr.length; i++) { // цикл по элементам массива
             if (uniqArr[i] != null) { // проверка на то, что ссылка на объект не пустая
                 // цикл сравнения с последующими элементами массива
                 for (int j = i + 1; j < uniqArr.length; j++) {
@@ -40,16 +44,25 @@ public class Main {
 
     /**
      * Метод объединения всех строк в одну в порядке следования в массиве
+     *
      * @param arr -- передаваемый в метод массив строк
      * @return -- возвращает переменную строку объединением всех строк массива
      */
     public static String allOneString(String[] arr) {
         // используем StringBuilder, чтобы не плодить экземпляры класса String
         StringBuilder result = new StringBuilder();
-        for (String w : arr ) {
-            if ( w != null ) result.append(w);
+        for (String w : arr) {
+            if (w != null) result.append(w);
         }
         return String.valueOf(result);
         // В условии задачи нет требования к добавлению разделителя между строками
+    }
+
+    public static void deleteDubsMyPool(String[] arr) {
+        MyPool myPool = new MyPool();
+        for (String w : arr) {
+            myPool.intern(w);
+        }
+        System.out.println(myPool);
     }
 }
